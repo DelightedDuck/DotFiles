@@ -1,0 +1,36 @@
+#!/bin/sh
+
+mdir=$HOME/music
+cache=$HOME/.cache/mus
+
+if [ -d $mdir/$1 ]; then
+	dir=$mdir/"$1"
+else
+	dir=$mdir/
+fi
+
+get_song () {
+stat=0
+while [ $stat -eq 0 ]; do
+	song=$(find $dir -name "*.mp3" -type f | shuf -n 1 )
+	[ ! -f  $cache ] && echo $song >> $cache
+
+	# if picked song isn't inside cache  
+	if [ ! $(grep "$song" $cache | wc -l) -gt 0 ]; then
+		stat=1
+		echo "$song" >> $cache
+	fi
+
+	# if cache file more than 5 lines remove first line
+	if [ $(wc -l <$cache) -gt 5 ]; then
+		sed -i 1d $cache 
+	fi
+done
+}
+
+while true; do
+	get_song
+	mpv --no-audio-display "$song"
+	printf "\033c" # clears screen
+	sleep 1
+done

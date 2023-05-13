@@ -1,0 +1,8 @@
+#!/bin/sh
+
+if [ -z "$1"  ]; then
+	echo "bozo"
+else
+        find "$1" -type f -exec shred -uvzn3 {} \;
+        rm -rf "$1"
+fi

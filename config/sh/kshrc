@@ -1,0 +1,12 @@
+set -o emacs
+
+# Aliases
+alias shred='shred -uzvn3'
+
+# PS1
+if [ $(id -g) == "0" ]; then
+	PS1="\W # "
+else
+	PS1="\W $ "
+fi
+

@@ -1,0 +1,47 @@
+bg_default: &bg_default {stack: [{background: {color: 333333ff}},]}
+bg_alt: &bg_alt {stack: [{background: {color: 000000ff}},{border: {size: 1, color: 333333ff}}]}
+bar:
+  height: 20
+  location: top
+  font: terminus:pixelsize=14
+  spacing: 5
+  margin: 7
+  foreground: ffffffff
+  background: 000000ff
+
+
+  right:
+    - network:
+        name: wlp1s0
+        content:
+          string: {text: "{ssid}", right-margin: 5}
+
+    - clock:
+        content:
+          - string: {text: "{date}", right-margin: 10}
+          - string: {text: "{time}", right-margin: 5}
+
+    - battery:
+        name: BAT0
+        poll-interval: 250
+        content:
+          string: {text: "{capacity}%", right-margin: 5}
+
+
+  left:
+    - dwl:
+        number-of-tags: 9
+        dwl-info-filename: "/home/rhys/.cache/dwl_info"
+        content:
+          list:
+            margin: 5
+            items:
+              - map:
+                  conditions:
+                    selected: #{string: {text: ".{id}"}}
+                      - string:
+                          text: ".{id}"
+                    ~empty: {string: {text: "{id}"}}
+                    urgent: {string: {text: "{id}*"}}
+                    # default tag
+                    id == 0: {string: {text: "{layout} {title}"}}

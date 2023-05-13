@@ -1,0 +1,25 @@
+set -o emacs
+
+# Aliases
+alias shred='shred -uzvn3'
+alias dwl-start='dwl > ~/.cache/dwl_info'
+
+# Export Vars
+export EDITOR=vim
+export ENV=$HOME/.kshrc
+export PATH=$PATH:$HOME/.local/bin
+export LESSHISTFILE=''
+export GNUPGHOME=$XDG_CONFIG_HOME/gnupg
+export HISTFILE=$HOME/.sh_hist
+export HISTSIZE=5000
+export XDG_DATA_HOME=$HOME/.local/share
+export XDG_RUNTIME_DIR=/tmp/$(id -u)
+export MOZ_ENABLE_WAYLAND=1
+# wayland keylayout
+export XKB_DEFAULT_LAYOUT=gb
+# makes arduino ide to show context menus properly
+export _JAVA_AWT_WM_NONREPARENTING=1
+
+[ ! -d $XDG_RUNTIME_DIR ] && mkdir /tmp/$(id -u)
+
+[ $(tty) = '/dev/tty1' ] && dwl-start
